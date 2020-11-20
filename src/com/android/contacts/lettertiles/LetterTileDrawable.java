@@ -52,6 +52,7 @@ public class LetterTileDrawable extends Drawable {
     private static Bitmap DEFAULT_PERSON_AVATAR;
     private static Bitmap DEFAULT_BUSINESS_AVATAR;
     private static Bitmap DEFAULT_VOICEMAIL_AVATAR;
+    private static String[] AVATAR_TYPES;
 
     /** Reusable components to avoid new allocations */
     private static final Paint sPaint = new Paint();
@@ -75,6 +76,9 @@ public class LetterTileDrawable extends Drawable {
     private int mColor;
     private Character mLetter = null;
 
+    private boolean mThemed = false;
+    private String[] mThemedTypes;
+
     public LetterTileDrawable(final Resources res) {
         if (sColors == null) {
             sColors = res.obtainTypedArray(R.array.letter_tile_colors);
@@ -82,11 +86,12 @@ public class LetterTileDrawable extends Drawable {
             sTileFontColor = res.getColor(R.color.letter_tile_font_color);
             sLetterToTileRatio = res.getFraction(R.dimen.letter_to_tile_ratio, 1, 1);
             DEFAULT_PERSON_AVATAR = BitmapFactory.decodeResource(res,
-                    R.drawable.ic_person_avatar);
+                    R.drawable.person_avatar);
             DEFAULT_BUSINESS_AVATAR = BitmapFactory.decodeResource(res,
-                    R.drawable.ic_business_white_120dp);
+                    R.drawable.business_avatar);
             DEFAULT_VOICEMAIL_AVATAR = BitmapFactory.decodeResource(res,
-                    R.drawable.ic_voicemail_avatar);
+                    R.drawable.voicemail_avatar);
+            AVATAR_TYPES = res.getStringArray(R.array.avatar_types);
             sPaint.setTypeface(Typeface.create(
                     res.getString(R.string.letter_tile_letter_font_family), Typeface.NORMAL));
             sPaint.setTextAlign(Align.CENTER);
@@ -96,6 +101,8 @@ public class LetterTileDrawable extends Drawable {
         mPaint.setFilterBitmap(true);
         mPaint.setDither(true);
         mColor = sDefaultColor;
+        mThemedTypes = res.getStringArray(R.array.themed_avatars);
+
     }
 
     @Override
@@ -130,7 +137,11 @@ public class LetterTileDrawable extends Drawable {
 
         sPaint.setTextAlign(Align.CENTER);
         sPaint.setAntiAlias(true);
-        sPaint.setAlpha(ALPHA);
+        if (!mThemed) {
+            sPaint.setAlpha(ALPHA);
+        } else {
+            sPaint.setAlpha(255);
+        }
 
         canvas.drawBitmap(bitmap, sRect, destRect, sPaint);
     }
@@ -217,7 +228,11 @@ public class LetterTileDrawable extends Drawable {
 
     @Override
     public void setColorFilter(final ColorFilter cf) {
-        mPaint.setColorFilter(cf);
+        if (mThemed) {
+            mPaint.setColorFilter(null);
+        } else {
+            mPaint.setColorFilter(cf);
+        }
     }
 
     @Override
@@ -278,6 +293,16 @@ public class LetterTileDrawable extends Drawable {
 
     public LetterTileDrawable setContactType(int contactType) {
         mContactType = contactType;
+        mThemed = false;
+        if (contactType > AVATAR_TYPES.length) {
+            contactType = TYPE_DEFAULT;
+        }
+        for (String s : mThemedTypes) {
+            if (s.equals(AVATAR_TYPES[contactType - 1])) {
+                mThemed = true;
+                break;
+            }
+        }
         return this;
     }
 

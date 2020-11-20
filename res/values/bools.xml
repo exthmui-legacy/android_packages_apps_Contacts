@@ -18,4 +18,6 @@
     <bool name="quickcontact_two_panel">false</bool>
     <bool name="contacteditor_two_panel">false</bool>
 
+    <bool name="contact_image_themed">false</bool>
+    <bool name="business_contact_image_themed">false</bool>
 </resources>
