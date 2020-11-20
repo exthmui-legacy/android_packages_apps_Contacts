@@ -10,7 +10,7 @@
         <item name="android:textColorSecondary">@color/secondary_text_color</item>
         <item name="android:icon">@android:color/transparent</item>
         <item name="android:listViewStyle">@style/ListViewStyle</item>
-        <item name="android:windowBackground">@color/background_primary</item>
+        <item name="android:windowBackground">@drawable/window_background</item>
         <item name="android:colorPrimaryDark">@color/primary_color_dark</item>
         <item name="android:colorPrimary">@color/primary_color</item>
         <item name="android:colorAccent">@color/primary_color</item>
@@ -70,7 +70,7 @@
         <item name="android:textColorSecondary">@color/secondary_text_color</item>
         <item name="android:icon">@android:color/transparent</item>
         <item name="android:listViewStyle">@style/ListViewStyle</item>
-        <item name="android:windowBackground">@color/background_primary</item>
+        <item name="android:windowBackground">@drawable/window_background</item>
         <item name="android:colorPrimaryDark">@color/primary_color_dark</item>
         <item name="colorPrimaryDark">@color/primary_color_dark</item>
         <item name="android:colorPrimary">@color/primary_color</item>
@@ -108,7 +108,7 @@
         <item name="list_item_header_text_indent">8dip</item>
         <item name="contact_browser_list_padding_left">0dip</item>
         <item name="contact_browser_list_padding_right">0dip</item>
-        <item name="contact_browser_background">@color/background_primary</item>
+        <item name="contact_browser_background">@drawable/window_background</item>
         <item name="list_item_text_indent">@dimen/contact_browser_list_item_text_indent</item>
         <item name="list_item_text_offset_top">-2dp</item>
         <item name="list_item_avatar_offset_top">-1dp</item>

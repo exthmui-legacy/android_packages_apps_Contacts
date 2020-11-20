@@ -1,6 +1,7 @@
 package com.android.contacts.widget;
 
 import android.content.Context;
+import android.graphics.ColorFilter;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
@@ -26,6 +27,9 @@ public class QuickContactImageView extends ImageView {
     private int mTintColor;
     private boolean mIsBusiness;
 
+    private boolean mThemed;
+    private boolean mBusinessThemed;
+
     public QuickContactImageView(Context context) {
         this(context, null);
     }
@@ -36,6 +40,8 @@ public class QuickContactImageView extends ImageView {
 
     public QuickContactImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        mThemed = context.getResources().getBoolean(R.bool.contact_image_themed);
+        mBusinessThemed = context.getResources().getBoolean(R.bool.business_contact_image_themed);
     }
 
     public void setTint(int color) {
@@ -50,7 +56,19 @@ public class QuickContactImageView extends ImageView {
     }
 
     public boolean isBasedOffLetterTile() {
-        return mOriginalDrawable instanceof LetterTileDrawable;
+        if (mOriginalDrawable instanceof LetterTileDrawable) {
+            return !isThemed();
+        }
+        return false;
+    }
+
+    private boolean isThemed()
+    {
+        if (mIsBusiness) {
+            return mBusinessThemed;
+        } else {
+            return mThemed;
+        }
     }
 
     public void setIsBusiness(boolean isBusiness) {
@@ -67,10 +85,10 @@ public class QuickContactImageView extends ImageView {
         } else if (drawable instanceof LetterTileDrawable) {
             if (!mIsBusiness) {
                 bitmapDrawable = (BitmapDrawable) getResources().getDrawable(
-                        R.drawable.person_white_540dp);
+                        R.drawable.person_image);
             } else {
                 bitmapDrawable = (BitmapDrawable) getResources().getDrawable(
-                        R.drawable.generic_business_white_540dp);
+                        R.drawable.business_image);
             }
         } else {
             throw new IllegalArgumentException("Does not support this type of drawable");
@@ -78,8 +96,19 @@ public class QuickContactImageView extends ImageView {
 
         mOriginalDrawable = drawable;
         mBitmapDrawable = bitmapDrawable;
-        setTint(mTintColor);
+        if (!isThemed()) {
+            setTint(mTintColor);
+        }
         super.setImageDrawable(bitmapDrawable);
+    }
+
+    @Override
+    public void setColorFilter(final ColorFilter cf) {
+        if (isThemed()) {
+            super.setColorFilter(null);
+        } else {
+            super.setColorFilter(cf);
+        }
     }
 
     @Override

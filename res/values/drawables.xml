@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="drawable" name="business_avatar">@drawable/ic_business_white_120dp</item>
+    <item type="drawable" name="voicemail_avatar">@drawable/ic_voicemail_avatar</item>
+    <item type="drawable" name="person_avatar">@drawable/ic_person_avatar</item>
+    <item type="drawable" name="person_image">@drawable/person_white_540dp</item>
+    <item type="drawable" name="business_image">@drawable/generic_business_white_540dp</item>
+    <item type="drawable" name="window_background">@color/background_primary</item>
+    <item type="drawable" name="actionbar_background">@color/actionbar_background_color</item>
+    <item type="drawable" name="actionbar_background_stacked">@color/actionbar_background_color</item>
+</resources>
